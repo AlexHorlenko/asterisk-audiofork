@@ -889,6 +889,8 @@ static int stop_audiofork_full(struct ast_channel *chan, const char *data)
     ast_datastore_free(datastore);
   }
 
+  ast_websocket_close(audiofork->websocket, 0)
+  
   ast_channel_unlock(chan);
 
   if (!ast_strlen_zero(beep_id)) {
