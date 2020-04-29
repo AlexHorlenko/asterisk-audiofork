@@ -533,7 +533,10 @@ static void *audiofork_thread(void *obj)
     ast_verb(2, "Executing [%s]\n", audiofork->post_process);
     ast_safe_system(audiofork->post_process);
   }
-
+  
+  /* send close to websocket connection*/
+  ast_websocket_close(audiofork->websocket, 0);
+  
   ast_verb(2, "End AudioFork Recording %s\n", audiofork->name);
   ast_test_suite_event_notify("AUDIOFORK_END", "File: %s\r\n",
                               audiofork->wsserver);
@@ -889,8 +892,6 @@ static int stop_audiofork_full(struct ast_channel *chan, const char *data)
     ast_datastore_free(datastore);
   }
 
-  ast_websocket_close(audiofork->websocket, 0)
-  
   ast_channel_unlock(chan);
 
   if (!ast_strlen_zero(beep_id)) {
