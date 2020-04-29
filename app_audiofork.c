@@ -535,7 +535,7 @@ static void *audiofork_thread(void *obj)
   }
   
   /* send close to websocket connection*/
-  ast_websocket_close(audiofork->websocket, 0);
+  ast_websocket_close(audiofork->websocket, 1000);
   
   ast_verb(2, "End AudioFork Recording %s\n", audiofork->name);
   ast_test_suite_event_notify("AUDIOFORK_END", "File: %s\r\n",
